@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        "use strict";
+        function BinaryTree(){
+            
+            //节点定义
+            function Node(key){
+                this.key = key;
+                this.left = null;
+                this.right = null;
+                this.parent = null;
+            }
+
+            //首节点
+            let root = null;
+            
+            // 插入数据
+            this.insert = key => {
+                let newNode = new Node(key);
+                if( root === null ){
+                    root = newNode;
+                }else{
+                    insertNode(root, newNode);
+                }
+            }
+
+            // 插入数据执行流程
+            const insertNode = (node, newNode) => {
+                if(node.key > newNode.key){
+                    if(node.left === null){
+                        newNode.parent = node;
+                        node.left = newNode;
+                    }else{
+                        insertNode(node.left, newNode);
+                    }
+                }else{
+                    if(node.right === null){
+                        newNode.parent = node;
+                        node.right = newNode;
+                    }else{
+                        insertNode(node.right, newNode);
+                    }
+                }
+            }
+
+
+            //中序遍历
+            this.inOrderTraverse = (callback) => inOrderTraverseNode(root, callback);
+
+            const inOrderTraverseNode = (node, callback) => {
+                if(node !== null){
+                    inOrderTraverseNode(node.left, callback);
+                    callback(node);
+                    inOrderTraverseNode(node.right, callback);
+                }
+            }
+
+            //前序遍历
+            this.preOrderTraverse = (callback) => preOrderTraverseNode(root, callback);
+
+            const preOrderTraverseNode = (node, callback) => {
+                if(node !== null){
+                    callback(node)
+                    preOrderTraverseNode(node.left, callback);
+                    preOrderTraverseNode(node.right, callback);
+                }
+            }
+
+            //后序遍历
+            this.postOrderTraverse = (callback) => postOrderTraverseNode(root, callback);
+
+            const postOrderTraverseNode = (node, callback) => {
+                if(node !== null){
+                    postOrderTraverseNode(node.left, callback);
+                    postOrderTraverseNode(node.right, callback);
+                    callback(node)
+                }
+            }
+
+            //查找最小值
+            this.min = () => minNode(root)
+
+            const minNode = node => {
+                if(node !== null ){
+                    while( node.left !== null ){
+                        node = node.left;
+                    }
+                    return node;
+                }
+            }
+            
+            //查找最大值
+            this.max = () => maxNode(root)
+            
+            const maxNode = node => {
+                if(node !== null){
+                    while( node.right !== null ){
+                        node = node.right;
+                    }
+                    return node;
+                }
+            }
+
+            //查找给定值的节点
+            this.search = key => !!searchNode(root, key);
+
+            const searchNode = (node, key) => {
+                if(node === null) return null;
+                if(node.key === key) {
+                    return node;    
+                }else if(key < node.key){
+                    return searchNode(node.left, key);
+                }else if(key > node.key){
+                    return searchNode(node.right, key);
+                }
+            }
+
+            //删除节点
+            this.remove = key => removeNode(root, key);
+
+            const removeNode = (root, key) => {
+                let node = searchNode(root, key);
+                if(node !== null){
+                    if( node.left === null && node.right === null ){
+                        node.parent.left === node?node.parent.left = null:node.parent.right = null;
+                    }else if( node.left === null ){
+                        node.parent.left === node?node.parent.left = node.right:node.parent.right = node.right;
+                    }else if( node.right === null ){
+                        node.parent.left === node?node.parent.left = node.left:node.parent.right = node.left;
+                    }else{
+                        node.key = minNode(node.right).key; 
+                        minNode(node.right) = null;
+                    }
+                }else{
+                    throw new Error("no found the Node with "+key);
+                }
+            }
+        }
+
+        const nodes = [8, 3, 10, 1, 6, 14, 4, 7, 13];
+        const binaryTree = new BinaryTree();
+        nodes.forEach(item=>{ binaryTree.insert(item); });
+
+        const inOrder = [];
+        const preOrder = [];
+        const postOrder = [];
+
+
+        binaryTree.inOrderTraverse((node)=>{
+            inOrder.push(node.key);
+        })
+        binaryTree.preOrderTraverse((node)=>{
+            preOrder.push(node.key);
+        })
+        binaryTree.postOrderTraverse((node)=>{
+            postOrder.push(node.key);
+        })
+
+
+        console.log("中序遍历", inOrder);
+        console.log("前序遍历", preOrder);
+        console.log("后序遍历", postOrder);
+        console.log("最小节点",binaryTree.min());
+        console.log("最大节点",binaryTree.max());
+        console.log("查找节点1",binaryTree.search(1));
+        console.log("查找节点9",binaryTree.search(9));
+
+        binaryTree.remove(14)
+        inOrder.length = 0;
+        preOrder.length = 0;
+        postOrder.length = 0;
+        binaryTree.inOrderTraverse((node)=>{
+            inOrder.push(node.key);
+        })
+        binaryTree.preOrderTraverse((node)=>{
+            preOrder.push(node.key);
+        })
+        binaryTree.postOrderTraverse((node)=>{
+            postOrder.push(node.key);
+        })
+        console.log("删除节点7后中序遍历", inOrder);
+        console.log("删除节点7后中序遍历", preOrder);
+        console.log("删除节点7后中序遍历", postOrder);
+        
+
+    </script>
+
+    
+</body>
+</html>
