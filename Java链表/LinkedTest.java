@@ -36,7 +36,5 @@ public class LinkedTest {
         end = System.nanoTime();
         System.out.println("linked:"+(end-start));    
 
-
-        //将近两倍的差距
     }
 }
