@@ -3,7 +3,10 @@ package 算法;
 import java.util.Arrays;
 
 /**
- * BubbleTest 冒泡排序
+ * BubbleTest 冒泡排序 O(n*n)
+ * 时间复杂度
+ * 最快 O(n) 已经是正序
+ * 最慢 O(n^2) 完全倒序
  */
 public class BubbleTest {
 
