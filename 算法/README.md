@@ -4,9 +4,11 @@
 ```Java
   int sunFunc(int n){   
     int num = 0;  //执行一次
+    
     for (int i = 0; i<n; i++){  //执行n次
       num = num + i;  //执行n次
     }
+    
     return num; //执行一次
   }
 ```
@@ -16,11 +18,13 @@
 ```Java
     int sunFunc(int n){
         int num = 0; //执行一次
+        
         for(int i = 0; i<n; i++){   //执行n次
             for(int j = 0; j<n; j++){   //执行n*n次
                 num = num + i * j;  //执行n*n次
             }
         }
+        
         return num; //执行一次
     }
 ```
@@ -43,9 +47,11 @@ O表示代码执行时间与f(n)成正比，也就是**代码执行时间T(n)与
 ```Java
   int sunFunc(int n){
     int sum = 0; //执行一次，忽略不计
+    
     for(int =0;i<n;i++>){
       sum += i; //循环内执行次数最多，执行次数为n次，因此时间复杂度记为O(n)
     }
+    
     return sum; //执行一次，忽略不计
   }
 ```
@@ -53,17 +59,21 @@ O表示代码执行时间与f(n)成正比，也就是**代码执行时间T(n)与
 ```Java
   int sunFunc(int n){
     int sum = 0;  //常量级，忽略
+    
     for(int i = 0; i < 99; i++){
       sum += i; //执行一百次，还是常量级，忽略
     }
+    
     for(int i = 0; i < n; i++){
       sum += i; //执行n次
     }
+    
     for(int i = 0; i < n; i++){
       for(int j = 0; j <n; j++){
         sum += i;   //执行n^2次
       }
     }
+    
     return sum;   //忽略
   }
 ```
@@ -97,6 +107,7 @@ O表示代码执行时间与f(n)成正比，也就是**代码执行时间T(n)与
 ```Java
   void Func(){
     int sum = 0
+    
     for(int i = 0; i < 100; i++){
       sum += i;   //执行一百次，也是常量级，几位O(1)
     }
